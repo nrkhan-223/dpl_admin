@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../types';
 import { initialUsers } from '../../data/initialData';
+import { resolveImageUrl, DEFAULT_AVATAR_FALLBACK } from '../../utils/imageHelper';
 
 interface AuthState {
   currentUser: User | null;
@@ -13,8 +14,12 @@ const loadInitialAuth = (): AuthState => {
     if (saved) {
       const parsed = JSON.parse(saved);
       if (parsed.currentUser) {
+        const user = { ...parsed.currentUser };
+        if (user.image) {
+          user.image = resolveImageUrl(user.image, DEFAULT_AVATAR_FALLBACK);
+        }
         return {
-          currentUser: parsed.currentUser,
+          currentUser: user,
           isAuthenticated: !!parsed.isAuthenticated,
         };
       }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { resolveImageUrl } from '../../utils/imageHelper';
 
 interface AvatarProps {
   src?: string | null;
@@ -53,12 +54,9 @@ export const Avatar: React.FC<AvatarProps> = ({
   };
 
   const borderClass = showBorder ? 'ring-2 ring-white shadow-sm' : '';
-  const normalizedSrc =
-    src && typeof src === 'string' && src.startsWith('/src/assets/images/')
-      ? src.replace('/src/assets/images/', '/images/')
-      : src;
+  const normalizedSrc = src ? resolveImageUrl(src, '') : null;
 
-  const hasValidImage = normalizedSrc && !imageError;
+  const hasValidImage = !!normalizedSrc && !imageError;
 
   return (
     <div

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './store';
 import {
   addProperty,
@@ -35,6 +35,30 @@ import { LoginModal } from './components/auth/LoginModal';
 export default function App() {
   const dispatch = useAppDispatch();
   const { currentUser, isAuthenticated } = useAppSelector((state) => state.auth);
+
+  // Auto-migrate any legacy localStorage paths to /assets/images/
+  useEffect(() => {
+    try {
+      const keys = ['dpl_auth_state', 'dpl_properties', 'dpl_users'];
+      keys.forEach((k) => {
+        const val = localStorage.getItem(k);
+        if (
+          val &&
+          (val.includes('src/assets/images/') ||
+            val.includes('/src/assets/images/') ||
+            val.includes('/images/'))
+        ) {
+          const updated = val
+            .split('/src/assets/images/').join('/assets/images/')
+            .split('src/assets/images/').join('/assets/images/')
+            .split('/images/').join('/assets/images/');
+          localStorage.setItem(k, updated);
+        }
+      });
+    } catch {
+      // ignore
+    }
+  }, []);
 
   // Admin Navigation Tab
   const [adminTab, setAdminTab] = useState<AdminTab>('overview');

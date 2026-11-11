@@ -50,10 +50,10 @@ const defaultAmenities = [
 ];
 
 const imagePresets = [
-  { label: 'Luxury Penthouse', url: '/images/prop_luxury_penthouse_1794130849626.jpg' },
-  { label: 'Urban Loft Studio', url: '/images/prop_studio_loft_1794130850753.jpg' },
-  { label: 'Waterfront Condo', url: '/images/prop_beachfront_condo_1794130850962.jpg' },
-  { label: 'Private Villa', url: '/images/prop_villa_residence_1794130852181.jpg' },
+  { label: 'Luxury Penthouse', url: '/assets/images/prop_luxury_penthouse_1794130849626.jpg' },
+  { label: 'Urban Loft Studio', url: '/assets/images/prop_studio_loft_1794130850753.jpg' },
+  { label: 'Waterfront Condo', url: '/assets/images/prop_beachfront_condo_1794130850962.jpg' },
+  { label: 'Private Villa', url: '/assets/images/prop_villa_residence_1794130852181.jpg' },
 ];
 
 export const PropertyFormModal: React.FC<PropertyFormModalProps> = ({

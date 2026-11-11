@@ -60,9 +60,9 @@ export const UserManagement: React.FC<UserManagementProps> = ({ onOpenAssignModa
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const avatarPresets = [
-  { label: 'Sample Avatar 1', url: '/images/avatar_resident_user_1794130868736.jpg' },
-  { label: 'Sample Avatar 2', url: '/images/avatar_dpl_admin_1794130868923.jpg' },
-];
+    { label: 'Sample Avatar 1', url: '/assets/images/avatar_resident_user_1794130868736.jpg' },
+    { label: 'Sample Avatar 2', url: '/assets/images/avatar_dpl_admin_1794130868923.jpg' },
+  ];
 
   const resetForm = () => {
     setFormData({

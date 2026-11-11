@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../types';
 import { initialUsers } from '../../data/initialData';
+import { resolveImageUrl, DEFAULT_AVATAR_FALLBACK } from '../../utils/imageHelper';
 
 interface UsersState {
   users: User[];
@@ -15,10 +16,7 @@ const loadInitialUsers = (): User[] => {
       const parsed: User[] = JSON.parse(saved);
       return parsed.map((u) => ({
         ...u,
-        image:
-          typeof u.image === 'string' && u.image.startsWith('/src/assets/images/')
-            ? u.image.replace('/src/assets/images/', '/images/')
-            : u.image,
+        image: u.image ? resolveImageUrl(u.image, DEFAULT_AVATAR_FALLBACK) : u.image,
       }));
     }
   } catch (e) {
