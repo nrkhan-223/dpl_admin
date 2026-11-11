@@ -12,7 +12,14 @@ const loadInitialUsers = (): User[] => {
   try {
     const saved = localStorage.getItem('dpl_users');
     if (saved) {
-      return JSON.parse(saved);
+      const parsed: User[] = JSON.parse(saved);
+      return parsed.map((u) => ({
+        ...u,
+        image:
+          typeof u.image === 'string' && u.image.startsWith('/src/assets/images/')
+            ? u.image.replace('/src/assets/images/', '/images/')
+            : u.image,
+      }));
     }
   } catch (e) {
     console.error('Failed to load users from localStorage', e);

@@ -53,7 +53,12 @@ export const Avatar: React.FC<AvatarProps> = ({
   };
 
   const borderClass = showBorder ? 'ring-2 ring-white shadow-sm' : '';
-  const hasValidImage = src && !imageError;
+  const normalizedSrc =
+    src && typeof src === 'string' && src.startsWith('/src/assets/images/')
+      ? src.replace('/src/assets/images/', '/images/')
+      : src;
+
+  const hasValidImage = normalizedSrc && !imageError;
 
   return (
     <div
@@ -62,7 +67,7 @@ export const Avatar: React.FC<AvatarProps> = ({
     >
       {hasValidImage ? (
         <img
-          src={src}
+          src={normalizedSrc}
           alt={name}
           referrerPolicy="no-referrer"
           onError={() => setImageError(true)}

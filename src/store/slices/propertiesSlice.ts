@@ -17,7 +17,14 @@ const loadInitialProperties = (): Property[] => {
     if (saved) {
       const parsed: Property[] = JSON.parse(saved);
       // Ensure all loaded properties have units properly populated
-      return parsed.map((p) => {
+      return parsed.map((rawP) => {
+        const normalizedImages = (rawP.images || []).map((img) =>
+          typeof img === 'string' && img.startsWith('/src/assets/images/')
+            ? img.replace('/src/assets/images/', '/images/')
+            : img
+        );
+        const p: Property = { ...rawP, images: normalizedImages };
+
         if (!p.units || p.units.length === 0) {
           const matchInitial = initialProperties.find((ip) => ip.id === p.id);
           if (matchInitial && matchInitial.units && matchInitial.units.length > 0) {

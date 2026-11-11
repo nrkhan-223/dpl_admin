@@ -16,6 +16,7 @@ import {
 import { Property } from '../../types';
 import { Button } from '../common/Button';
 import { Tabs } from '../common/Tabs';
+import { resolveImageUrl, handleImageError, DEFAULT_PROPERTY_FALLBACK } from '../../utils/imageHelper';
 
 interface CollectionsManagementProps {
   onOpenCreateProperty: () => void;
@@ -147,17 +148,25 @@ export const CollectionsManagement: React.FC<CollectionsManagementProps> = ({
           {currentList.map((property) => (
             <div
               key={property.id}
-              className="bg-white rounded-2xl sm:rounded-3xl border border-sky-100 shadow-xs overflow-hidden flex flex-col justify-between hover:border-sky-300 transition-all"
+              className="bg-white rounded-2xl sm:rounded-3xl border border-sky-100 shadow-xs overflow-hidden flex flex-col justify-between hover:border-sky-300 hover:shadow-md transition-all group"
             >
               <div>
-                <div className="relative aspect-16/10 bg-slate-100 overflow-hidden">
-                  <img
-                    src={property.images[0]}
-                    alt={property.title}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+                <div className="relative aspect-16/10 bg-slate-100 overflow-hidden isolate">
+                  {property.images[0] ? (
+                    <img
+                      src={resolveImageUrl(property.images[0])}
+                      alt={property.title}
+                      referrerPolicy="no-referrer"
+                      loading="lazy"
+                      onError={(e) => handleImageError(e, DEFAULT_PROPERTY_FALLBACK)}
+                      className="w-full h-full object-cover transform-gpu transition-transform duration-500 ease-out group-hover:scale-105 will-change-transform"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-slate-400">
+                      <Building2 className="w-8 h-8" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
 
                   <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
                     {property.isExclusive && (

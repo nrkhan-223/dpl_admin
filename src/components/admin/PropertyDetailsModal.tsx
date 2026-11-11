@@ -23,6 +23,7 @@ import { Property } from '../../types';
 import { Modal } from '../common/Modal';
 import { Badge } from '../common/Badge';
 import { Button } from '../common/Button';
+import { resolveImageUrl, handleImageError, DEFAULT_PROPERTY_FALLBACK } from '../../utils/imageHelper';
 
 interface PropertyDetailsModalProps {
   property: Property | null;
@@ -67,9 +68,10 @@ export const PropertyDetailsModal: React.FC<PropertyDetailsModalProps> = ({
         <div className="relative aspect-16/9 sm:aspect-21/9 bg-slate-900 rounded-2xl overflow-hidden -mx-5 -mt-5 sm:-mx-6">
           {images.length > 0 ? (
             <img
-              src={images[activeImageIndex]}
+              src={resolveImageUrl(images[activeImageIndex])}
               alt={property.title}
               referrerPolicy="no-referrer"
+              onError={(e) => handleImageError(e, DEFAULT_PROPERTY_FALLBACK)}
               className="w-full h-full object-cover transition-all duration-300"
             />
           ) : (
@@ -165,9 +167,10 @@ export const PropertyDetailsModal: React.FC<PropertyDetailsModalProps> = ({
                 }`}
               >
                 <img
-                  src={img}
+                  src={resolveImageUrl(img)}
                   alt={`Thumbnail ${idx}`}
                   referrerPolicy="no-referrer"
+                  onError={(e) => handleImageError(e, DEFAULT_PROPERTY_FALLBACK)}
                   className="w-full h-full object-cover"
                 />
               </button>

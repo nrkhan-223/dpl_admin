@@ -25,6 +25,7 @@ import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
 import { FormField, Input } from '../common/FormField';
 import { Select } from '../common/Select';
+import { resolveImageUrl, handleImageError, DEFAULT_PROPERTY_FALLBACK } from '../../utils/imageHelper';
 
 interface PropertyFormModalProps {
   isOpen: boolean;
@@ -49,10 +50,10 @@ const defaultAmenities = [
 ];
 
 const imagePresets = [
-  { label: 'Luxury Penthouse', url: '/src/assets/images/prop_luxury_penthouse_1794130849626.jpg' },
-  { label: 'Urban Loft Studio', url: '/src/assets/images/prop_studio_loft_1794130850753.jpg' },
-  { label: 'Waterfront Condo', url: '/src/assets/images/prop_beachfront_condo_1794130850962.jpg' },
-  { label: 'Private Villa', url: '/src/assets/images/prop_villa_residence_1794130852181.jpg' },
+  { label: 'Luxury Penthouse', url: '/images/prop_luxury_penthouse_1794130849626.jpg' },
+  { label: 'Urban Loft Studio', url: '/images/prop_studio_loft_1794130850753.jpg' },
+  { label: 'Waterfront Condo', url: '/images/prop_beachfront_condo_1794130850962.jpg' },
+  { label: 'Private Villa', url: '/images/prop_villa_residence_1794130852181.jpg' },
 ];
 
 export const PropertyFormModal: React.FC<PropertyFormModalProps> = ({
@@ -968,9 +969,11 @@ export const PropertyFormModal: React.FC<PropertyFormModalProps> = ({
                   />
                   {coverImage && (
                     <img
-                      src={coverImage}
+                      src={resolveImageUrl(coverImage)}
                       alt="Cover preview"
+                      loading="lazy"
                       referrerPolicy="no-referrer"
+                      onError={(e) => handleImageError(e, DEFAULT_PROPERTY_FALLBACK)}
                       className="mt-2 w-full h-24 object-cover rounded-xl border border-sky-100"
                     />
                   )}
@@ -986,9 +989,11 @@ export const PropertyFormModal: React.FC<PropertyFormModalProps> = ({
                   />
                   {galleryImage && (
                     <img
-                      src={galleryImage}
+                      src={resolveImageUrl(galleryImage)}
                       alt="Gallery preview"
+                      loading="lazy"
                       referrerPolicy="no-referrer"
+                      onError={(e) => handleImageError(e, DEFAULT_PROPERTY_FALLBACK)}
                       className="mt-2 w-full h-24 object-cover rounded-xl border border-sky-100"
                     />
                   )}

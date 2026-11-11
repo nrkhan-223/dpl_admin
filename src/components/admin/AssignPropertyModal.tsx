@@ -10,6 +10,7 @@ import { Button } from '../common/Button';
 import { FormField, Input } from '../common/FormField';
 import { Avatar } from '../common/Avatar';
 import { Badge } from '../common/Badge';
+import { resolveImageUrl, handleImageError, DEFAULT_PROPERTY_FALLBACK } from '../../utils/imageHelper';
 
 interface AssignPropertyModalProps {
   isOpen: boolean;
@@ -295,8 +296,10 @@ export const AssignPropertyModal: React.FC<AssignPropertyModalProps> = ({
             <div className="flex items-center gap-3 pt-1">
               {chosenProperty.images[0] && (
                 <img
-                  src={chosenProperty.images[0]}
+                  src={resolveImageUrl(chosenProperty.images[0])}
                   alt={chosenProperty.title}
+                  referrerPolicy="no-referrer"
+                  onError={(e) => handleImageError(e, DEFAULT_PROPERTY_FALLBACK)}
                   className="w-12 h-10 object-cover rounded-lg border border-sky-100"
                 />
               )}
