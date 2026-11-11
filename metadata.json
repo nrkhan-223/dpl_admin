@@ -1,0 +1,6 @@
+{
+  "name": "DPL - Property Management & Admin Portal",
+  "description": "Comprehensive property management admin panel and resident portal for DPL mobile application.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
