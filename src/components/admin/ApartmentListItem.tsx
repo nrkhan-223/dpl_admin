@@ -86,17 +86,17 @@ export const ApartmentListItem: React.FC<ApartmentListItemProps> = ({
             {/* Vignette Overlay for Crisp Badges */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-black/35 pointer-events-none" />
 
-            {/* Top Badges */}
+            {/* Top Badges (Reduced Font Size) */}
             <div className="absolute top-2 left-2 right-2 flex items-center justify-between pointer-events-auto">
               <div className="flex items-center gap-1 flex-wrap">
                 {property.isExclusive && (
-                  <span className="bg-amber-400 text-slate-950 font-bold text-2xs uppercase tracking-wider px-1.5 py-0.5 rounded flex items-center gap-0.5 shadow-xs">
-                    <Sparkles className="w-2.5 h-2.5 text-slate-950 fill-slate-950" />
+                  <span className="bg-amber-400 text-slate-950 font-bold text-[14px] leading-tight uppercase tracking-wider px-1.5 py-0.5 rounded flex items-center gap-0.5 shadow-xs">
+                    <Sparkles className="w-2 h-2 text-slate-950 fill-slate-950" />
                     Exclusive
                   </span>
                 )}
                 <span
-                  className={`text-2xs font-semibold px-1.5 py-0.5 rounded shadow-xs ${
+                  className={`text-[14px] leading-tight font-semibold px-1.5 py-0.5 rounded shadow-xs ${
                     property.projectStage === 'ongoing'
                       ? 'bg-sky-800 text-white'
                       : 'bg-emerald-600 text-white'
@@ -109,10 +109,10 @@ export const ApartmentListItem: React.FC<ApartmentListItemProps> = ({
 
             {/* Bottom Badges on Image */}
             <div className="absolute bottom-2 left-2 right-2 flex items-end justify-between pointer-events-none">
-              <span className="text-2xs font-semibold bg-black/60 backdrop-blur-md text-white px-1.5 py-0.5 rounded">
+              <span className="text-[14px] leading-tight font-semibold bg-black/60 backdrop-blur-md text-white px-1.5 py-0.5 rounded">
                 {property.categoryName}
               </span>
-              <span className="text-2xs font-mono font-medium bg-black/60 backdrop-blur-md text-slate-200 px-1.5 py-0.5 rounded">
+              <span className="text-[14px] leading-tight font-mono font-medium bg-black/60 backdrop-blur-md text-slate-200 px-1.5 py-0.5 rounded">
                 {property.images.length || 1} {property.images.length === 1 ? 'photo' : 'photos'}
               </span>
             </div>
