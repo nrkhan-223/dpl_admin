@@ -64,13 +64,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Center / Right: Status chip & Admin Profile */}
+        {/* Right: Admin Profile */}
         <div className="flex items-center gap-3">
-          {/* Quick status chip */}
-          <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-600 font-medium bg-slate-50 border border-slate-200/80 px-3 py-1.5 rounded-xl">
-            <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
-            <span>Live Management Engine</span>
-          </div>
 
           {/* Admin User Profile */}
           {isAuthenticated && currentUser ? (

@@ -15,7 +15,6 @@ import {
   Trash2,
   CheckCircle2,
   ArrowRight,
-  RefreshCw,
   Milestone,
   Check,
   Star,
@@ -25,7 +24,6 @@ import {
 } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import {
-  updateCompanyHeader,
   addCoreValue,
   updateCoreValue,
   deleteCoreValue,
@@ -38,7 +36,6 @@ import {
   addKeyAchievement,
   updateKeyAchievement,
   deleteKeyAchievement,
-  resetCompanyProfileToDefault,
 } from '../../store/slices/companyProfileSlice';
 import {
   CoreValue,
@@ -58,11 +55,6 @@ export const CompanyProfileManagement: React.FC = () => {
   const [activeTab, setActiveTab] = useState<
     'all' | 'values' | 'milestones' | 'why-choose' | 'achievements'
   >('all');
-
-  // Company Header editing state
-  const [isEditingHeader, setIsEditingHeader] = useState(false);
-  const [headerCompanyName, setHeaderCompanyName] = useState(data.companyName);
-  const [headerTagline, setHeaderTagline] = useState(data.tagline);
 
   // --- Modals State ---
   // Core Value Modal
@@ -101,24 +93,6 @@ export const CompanyProfileManagement: React.FC = () => {
     type: 'value' | 'milestone' | 'why' | 'achievement';
     id: string;
   } | null>(null);
-
-  // Sync header states when data changes
-  React.useEffect(() => {
-    setHeaderCompanyName(data.companyName);
-    setHeaderTagline(data.tagline);
-  }, [data]);
-
-  // Handlers for Header
-  const handleSaveHeader = (e: React.FormEvent) => {
-    e.preventDefault();
-    dispatch(
-      updateCompanyHeader({
-        companyName: headerCompanyName.trim(),
-        tagline: headerTagline.trim(),
-      })
-    );
-    setIsEditingHeader(false);
-  };
 
   // Handlers for Core Values
   const handleOpenAddValue = () => {
@@ -346,37 +320,21 @@ export const CompanyProfileManagement: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Header Card */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-sky-200/90 shadow-xs">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-sky-100 shadow-xs">
         <div>
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-sky-100 text-sky-850 flex items-center justify-center border border-sky-200 font-bold">
-              <Award className="w-5 h-5 text-sky-800" />
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-sky-800 text-white flex items-center justify-center font-bold shadow-xs">
+              <Award className="w-5 h-5 text-amber-300" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-                  Company Story, Values & Milestones
-                </h1>
-                <span className="text-xs font-mono font-bold text-sky-900 bg-sky-100/80 border border-sky-200 px-2.5 py-0.5 rounded-full">
-                  Profile Engine
-                </span>
-              </div>
-              <p className="text-sm text-slate-500 mt-0.5">
-                Configure Dreamer Properties Core Values, Journey Milestones, Why Choose Us reasons, and Key Achievements.
+              <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+                Values, Milestones & Core Pillars
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+                Manage institutional Core Values, Journey Milestones, Why Dreamer Properties reasons, and Key Achievements.
               </p>
             </div>
           </div>
-        </div>
-
-        <div className="flex items-center gap-2.5 self-start md:self-auto flex-wrap">
-          <button
-            onClick={() => dispatch(resetCompanyProfileToDefault())}
-            title="Reset to default company story from reference image"
-            className="p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:text-sky-800 hover:border-sky-300 hover:bg-sky-50/50 transition-colors cursor-pointer"
-          >
-            <RefreshCw className="w-4 h-4" />
-          </button>
-
         </div>
       </div>
 
@@ -452,7 +410,7 @@ export const CompanyProfileManagement: React.FC = () => {
                 <h2 className="text-lg font-bold text-slate-900">List of Core Values</h2>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
-                Define the institutional guiding principles that appear in the dark blue Foundation container.
+                Institutional guiding principles and ethical standards defining Dreamer Properties.
               </p>
             </div>
 
@@ -470,7 +428,7 @@ export const CompanyProfileManagement: React.FC = () => {
             {data.coreValues.map((val) => (
               <div
                 key={val.id}
-                className="p-4 rounded-xl border border-sky-200/90 bg-sky-50/30 hover:bg-sky-50/60 transition-all flex flex-col justify-between group"
+                className="p-4 rounded-xl border border-sky-100 bg-white hover:border-sky-300 hover:shadow-xs transition-all flex flex-col justify-between group"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2.5">
@@ -478,7 +436,7 @@ export const CompanyProfileManagement: React.FC = () => {
                       {renderIcon(val.icon, 'w-4 h-4')}
                     </div>
                     {val.badge && (
-                      <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-sky-100 text-sky-900 border border-sky-300">
+                      <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-sky-100 text-sky-900 border border-sky-200">
                         {val.badge}
                       </span>
                     )}
@@ -487,17 +445,17 @@ export const CompanyProfileManagement: React.FC = () => {
                   <p className="text-xs text-slate-600 mt-1 leading-relaxed">{val.description}</p>
                 </div>
 
-                <div className="flex items-center justify-end gap-1.5 pt-3 mt-3 border-t border-sky-100">
+                <div className="flex items-center justify-end gap-1.5 pt-3 mt-3 border-t border-slate-100">
                   <button
                     onClick={() => handleOpenEditValue(val)}
-                    className="p-1.5 text-slate-400 hover:text-sky-800 hover:bg-white rounded-lg transition-colors cursor-pointer"
+                    className="p-1.5 text-slate-400 hover:text-sky-800 hover:bg-sky-50 rounded-lg transition-colors cursor-pointer"
                     title="Edit core value"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                   </button>
                   <button
                     onClick={() => setDeleteConfirm({ type: 'value', id: val.id })}
-                    className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-white rounded-lg transition-colors cursor-pointer"
+                    className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
                     title="Delete core value"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -513,7 +471,7 @@ export const CompanyProfileManagement: React.FC = () => {
           SECTION: JOURNEY & MILESTONES MANAGEMENT
          ========================================================================= */}
       {(activeTab === 'milestones' || activeTab === 'all') && (
-        <div className="bg-white p-6 rounded-2xl border border-sky-200/90 shadow-xs space-y-4">
+        <div className="bg-white p-6 rounded-2xl border border-sky-100 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
             <div>
               <div className="flex items-center gap-2">
@@ -523,7 +481,7 @@ export const CompanyProfileManagement: React.FC = () => {
                 <h2 className="text-lg font-bold text-slate-900">List of Journey & Milestones</h2>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
-                Timeline sequence of landmark achievements and growth stages connecting year badges.
+                Chronological milestones and landmark growth stages of the organization.
               </p>
             </div>
 
@@ -537,14 +495,14 @@ export const CompanyProfileManagement: React.FC = () => {
             </Button>
           </div>
 
-          <div className="space-y-3">
+          <div className="relative pl-6 sm:pl-8 space-y-3.5 before:absolute before:left-3 before:top-3 before:bottom-3 before:w-0.5 before:bg-sky-200">
             {data.milestones.map((ms) => (
               <div
                 key={ms.id}
-                className="p-4 rounded-xl border border-slate-200 hover:border-sky-300 bg-white hover:bg-sky-50/20 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                className="relative p-4 rounded-xl border border-sky-100 hover:border-sky-300 bg-white hover:bg-sky-50/20 shadow-2xs transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 group"
               >
                 <div className="flex items-start gap-3.5">
-                  <div className="w-12 h-10 rounded-xl bg-sky-900 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0">
+                  <div className="w-12 h-10 rounded-xl bg-sky-850 text-white font-mono font-bold text-xs flex items-center justify-center shrink-0 shadow-xs">
                     {ms.year}
                   </div>
                   <div>
@@ -579,7 +537,7 @@ export const CompanyProfileManagement: React.FC = () => {
           SECTION: WHY CHOOSE DREAMER PROPERTIES MANAGEMENT
          ========================================================================= */}
       {(activeTab === 'why-choose' || activeTab === 'all') && (
-        <div className="bg-white p-6 rounded-2xl border border-sky-200/90 shadow-xs space-y-4">
+        <div className="bg-white p-6 rounded-2xl border border-sky-100 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
             <div>
               <div className="flex items-center gap-2">
@@ -589,7 +547,7 @@ export const CompanyProfileManagement: React.FC = () => {
                 <h2 className="text-lg font-bold text-slate-900">Why Dreamer Properties Options</h2>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
-                Key competitive advantages shown as rounded cards with colorful badges (Legal Transparency, Timely Delivery, etc.).
+                Core institutional advantages, client trust guarantees, and unique property offerings.
               </p>
             </div>
 
@@ -607,18 +565,15 @@ export const CompanyProfileManagement: React.FC = () => {
             {data.whyChooseUs.map((why) => (
               <div
                 key={why.id}
-                className="p-4 rounded-xl border border-slate-200 hover:border-sky-300 bg-white hover:bg-sky-50/20 transition-all flex items-start justify-between gap-3"
+                className="p-4 rounded-xl border border-sky-100 hover:border-sky-300 bg-white hover:bg-sky-50/20 shadow-2xs transition-all flex items-start justify-between gap-3"
               >
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-sky-800 text-white flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-sky-800 text-white flex items-center justify-center shrink-0 shadow-xs">
                     {renderIcon(why.icon, 'w-5 h-5')}
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-slate-900">{why.title}</h3>
                     <p className="text-xs text-slate-600 mt-1 leading-relaxed">{why.description}</p>
-                    <span className="inline-block mt-2 text-[10px] uppercase font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">
-                      Color: {why.color}
-                    </span>
                   </div>
                 </div>
 
@@ -648,17 +603,17 @@ export const CompanyProfileManagement: React.FC = () => {
           SECTION: KEY ACHIEVEMENTS STATS
          ========================================================================= */}
       {(activeTab === 'achievements' || activeTab === 'all') && (
-        <div className="bg-white p-6 rounded-2xl border border-sky-200/90 shadow-xs space-y-4">
+        <div className="bg-white p-6 rounded-2xl border border-sky-100 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
             <div>
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-sky-100 text-sky-850 flex items-center justify-center font-bold">
                   <Trophy className="w-4 h-4 text-sky-800" />
                 </div>
-                <h2 className="text-lg font-bold text-slate-900">Our Key Achievements</h2>
+                <h2 className="text-lg font-bold text-slate-900">Key Achievements</h2>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
-                The 4 headline metric cards displayed at the top of the company profile.
+                Headline operational scale indicators and institutional track records.
               </p>
             </div>
 
@@ -710,90 +665,6 @@ export const CompanyProfileManagement: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
-      )}
-
-      {/* =========================================================================
-          SECTION: HEADER SETTINGS
-         ========================================================================= */}
-      {(activeTab === 'all') && (
-        <div className="bg-white p-6 rounded-2xl border border-sky-200/90 shadow-xs space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-            <div>
-              <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
-                Company Header & Motto
-              </h2>
-              <p className="text-xs text-slate-500">
-                Update the company title and motto tagline.
-              </p>
-            </div>
-            {!isEditingHeader && (
-              <Button
-                size="sm"
-                variant="secondary"
-                onClick={() => setIsEditingHeader(true)}
-                icon={<Edit2 className="w-3.5 h-3.5 text-sky-800" />}
-              >
-                Edit Header Info
-              </Button>
-            )}
-          </div>
-
-          {isEditingHeader ? (
-            <form onSubmit={handleSaveHeader} className="space-y-4 max-w-2xl">
-              <FormField label="Company Title / Dashboard Name" required>
-                <Input
-                  value={headerCompanyName}
-                  onChange={(e) => setHeaderCompanyName(e.target.value)}
-                  placeholder="e.g. Dreamer Properties LTD or Company Dashboard"
-                  required
-                />
-              </FormField>
-
-              <FormField label="Tagline / Motto" required>
-                <Input
-                  value={headerTagline}
-                  onChange={(e) => setHeaderTagline(e.target.value)}
-                  placeholder="e.g. Building Trust, Delivering Excellence Since 2010"
-                  required
-                />
-              </FormField>
-
-              <div className="flex items-center gap-2 pt-2">
-                <Button type="submit" variant="primary" size="sm">
-                  <CheckCircle2 className="w-4 h-4 mr-1.5" />
-                  Save Header Settings
-                </Button>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setHeaderCompanyName(data.companyName);
-                    setHeaderTagline(data.tagline);
-                    setIsEditingHeader(false);
-                  }}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          ) : (
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-sky-850 text-white flex items-center justify-center font-bold shrink-0">
-                  <Award className="w-5 h-5 text-amber-300" />
-                </div>
-                <div>
-                  <h3 className="text-base font-bold text-slate-900">{data.companyName}</h3>
-                  <p className="text-xs text-slate-600 mt-0.5">{data.tagline}</p>
-                </div>
-              </div>
-              <span className="text-xs font-mono text-sky-800 bg-sky-100 px-2.5 py-1 rounded-md self-start sm:self-auto">
-                Live on Customer Portal
-              </span>
-            </div>
-          )}
         </div>
       )}
 

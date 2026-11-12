@@ -13,7 +13,6 @@ import {
   Sparkles,
   LayoutGrid,
   List,
-  RotateCcw,
   Tag,
   FileCode2,
 } from 'lucide-react';
@@ -23,7 +22,6 @@ import {
   updateBlog,
   deleteBlog,
   toggleBlogStatus,
-  resetBlogsToDefault,
 } from '../../store/slices/blogsSlice';
 import { BlogPost } from '../../types';
 import { Button } from '../common/Button';
@@ -146,21 +144,6 @@ export const BlogManagement: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2.5">
-          <Button
-            type="button"
-            variant="secondary"
-            size="sm"
-            onClick={() => {
-              if (confirm('Reset blog articles to DPL default editorial articles?')) {
-                dispatch(resetBlogsToDefault());
-              }
-            }}
-            title="Reset articles to initial catalog"
-          >
-            <RotateCcw className="w-3.5 h-3.5 mr-1" />
-            Reset Samples
-          </Button>
-
           <Button
             type="button"
             variant="primary"
@@ -379,18 +362,19 @@ export const BlogManagement: React.FC = () => {
             >
               <div>
                 {/* Cover Image Container */}
-                <div className="relative aspect-16/9 bg-slate-900 overflow-hidden">
+                <div className="relative aspect-16/9 bg-slate-900 overflow-hidden isolate">
                   <img
                     src={blog.image}
                     alt={blog.title}
+                    loading="lazy"
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover transform-gpu transition-transform duration-500 ease-out group-hover:scale-105 will-change-transform"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src =
                         'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80';
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
 
                   {/* Badges on Cover */}
                   <div className="absolute top-3 left-3 right-3 flex items-center justify-between">

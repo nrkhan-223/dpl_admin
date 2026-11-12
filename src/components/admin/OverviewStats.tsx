@@ -68,17 +68,12 @@ export const OverviewStats: React.FC<OverviewStatsProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Banner / Actions Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-sky-200/90 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 sm:p-6 rounded-2xl sm:rounded-3xl border border-sky-100 shadow-xs">
         <div>
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-              DPL Property Administration Hub
-            </h1>
-            <Badge variant="sky" size="sm">
-              Live Engine
-            </Badge>
-          </div>
-          <p className="text-sm text-slate-500 mt-1.5">
+          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+            Property Administration Hub
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Real-time multi-tenant management, exclusive collections, user profiles, and lease orchestration.
           </p>
         </div>

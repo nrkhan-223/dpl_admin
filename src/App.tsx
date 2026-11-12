@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from './store';
 import {
   addProperty,
@@ -62,6 +62,24 @@ export default function App() {
 
   // Admin Navigation Tab
   const [adminTab, setAdminTab] = useState<AdminTab>('overview');
+
+  // Reference to main scrolling container
+  const mainContentRef = useRef<HTMLElement>(null);
+
+  // Scroll to top immediately whenever admin tab/page changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    if (document.documentElement) {
+      document.documentElement.scrollTop = 0;
+    }
+    if (document.body) {
+      document.body.scrollTop = 0;
+    }
+    if (mainContentRef.current) {
+      mainContentRef.current.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      mainContentRef.current.scrollTop = 0;
+    }
+  }, [adminTab]);
 
   // Mobile Drawer State
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -210,7 +228,7 @@ export default function App() {
           />
 
           {/* Admin Content Canvas */}
-          <main className="flex-1 p-4 sm:p-6 lg:p-8 min-w-0 overflow-y-auto">
+          <main ref={mainContentRef} className="flex-1 p-4 sm:p-6 lg:p-8 min-w-0 overflow-y-auto">
             {adminTab === 'overview' && (
               <OverviewStats
                 onNavigate={(tab) => setAdminTab(tab)}

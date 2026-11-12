@@ -5,7 +5,6 @@ import {
   updateCallbackStatus,
   updateCallbackNotes,
   deleteCallbackRequest,
-  resetCallbacksToDefault,
 } from '../../store/slices/callbackRequestsSlice';
 import { CallbackRequest } from '../../types';
 import {
@@ -22,7 +21,6 @@ import {
   Sparkles,
   User,
   Plus,
-  RefreshCw,
   PhoneForwarded,
   Check,
   Building,
@@ -113,18 +111,11 @@ export default function CallbackRequestsManagement() {
 
         <div className="flex items-center gap-2.5 self-start md:self-auto">
           <button
-            onClick={() => dispatch(resetCallbacksToDefault())}
-            title="Reset to initial sample callback requests"
-            className="p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:text-sky-800 hover:border-sky-300 hover:bg-sky-50/50 transition-colors cursor-pointer"
-          >
-            <RefreshCw className="w-4 h-4" />
-          </button>
-          <button
             onClick={() => setIsNewRequestModalOpen(true)}
             className="flex items-center gap-2 px-4 py-2.5 bg-sky-800 hover:bg-sky-900 text-white rounded-xl font-medium shadow-sm transition-colors text-sm cursor-pointer"
           >
             <Plus className="w-4 h-4" />
-            <span>Simulate User Callback</span>
+            <span>Log Callback Request</span>
           </button>
         </div>
       </div>

@@ -7,7 +7,6 @@ import {
   ExternalLink,
   Globe,
   Building2,
-  RotateCcw,
   CheckCircle2,
   AlertCircle,
   Image as ImageIcon,
@@ -18,7 +17,6 @@ import {
   updateSisterConcern,
   deleteSisterConcern,
   toggleSisterConcernStatus,
-  resetSisterConcernsToDefault,
 } from '../../store/slices/sisterConcernsSlice';
 import { SisterConcern } from '../../types';
 import { Modal } from '../common/Modal';
@@ -164,20 +162,6 @@ export const SisterConcernsManagement: React.FC = () => {
         <div className="flex items-center gap-2.5">
           <Button
             type="button"
-            variant="secondary"
-            size="sm"
-            onClick={() => {
-              if (confirm('Reset sister concerns to DPL default group brands?')) {
-                dispatch(resetSisterConcernsToDefault());
-              }
-            }}
-          >
-            <RotateCcw className="w-3.5 h-3.5 mr-1" />
-            Reset Samples
-          </Button>
-
-          <Button
-            type="button"
             variant="primary"
             size="sm"
             onClick={handleOpenCreate}
@@ -197,18 +181,19 @@ export const SisterConcernsManagement: React.FC = () => {
           >
             <div>
               {/* Image Container with Cover Photo */}
-              <div className="relative aspect-16/9 bg-slate-900 overflow-hidden">
+              <div className="relative aspect-16/9 bg-slate-900 overflow-hidden isolate">
                 <img
                   src={concern.image}
                   alt={concern.name}
+                  loading="lazy"
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover transform-gpu transition-transform duration-500 ease-out group-hover:scale-105 will-change-transform"
                   onError={(e) => {
                     (e.target as HTMLImageElement).src =
                       'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80';
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
 
                 {/* Top status */}
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between">

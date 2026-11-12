@@ -12,7 +12,6 @@ import {
   Plus,
   Trash2,
   Edit2,
-  RotateCcw,
   ExternalLink,
   ShieldCheck,
   AlertCircle,
@@ -24,7 +23,6 @@ import {
   updateScheduleItem,
   deleteScheduleItem,
   toggleOpenStatus,
-  resetContactInfoToDefault,
 } from '../../store/slices/contactInfoSlice';
 import { OfficeScheduleItem } from '../../types';
 import { Button } from '../common/Button';
@@ -135,7 +133,7 @@ export const ContactInfoManagement: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-sky-100">
         <div>
           <div className="flex items-center gap-2">
-            <span className="w-8 h-8 rounded-xl bg-sky-700 text-white flex items-center justify-center font-bold">
+            <span className="w-8 h-8 rounded-xl bg-sky-800 text-white flex items-center justify-center font-bold shadow-xs">
               <PhoneCall className="w-4 h-4" />
             </span>
             <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
@@ -143,7 +141,7 @@ export const ContactInfoManagement: React.FC = () => {
             </h1>
           </div>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Configure hotline numbers, WhatsApp, customer support email, and office operating schedule like the official inquiry card.
+            Manage customer service hotlines, WhatsApp contact channels, headquarters address, and office operating hours.
           </p>
         </div>
 
@@ -155,21 +153,7 @@ export const ContactInfoManagement: React.FC = () => {
             onClick={() => setIsCallbackModalOpen(true)}
           >
             <PhoneCall className="w-3.5 h-3.5 mr-1 text-sky-800" />
-            Test Callback Form
-          </Button>
-
-          <Button
-            type="button"
-            variant="secondary"
-            size="sm"
-            onClick={() => {
-              if (confirm('Reset contact information and schedules to DPL defaults?')) {
-                dispatch(resetContactInfoToDefault());
-              }
-            }}
-          >
-            <RotateCcw className="w-3.5 h-3.5 mr-1" />
-            Reset Defaults
+            Preview Callback Modal
           </Button>
 
           <Button
@@ -441,7 +425,7 @@ export const ContactInfoManagement: React.FC = () => {
               className="w-4 h-4 text-sky-700 rounded border-slate-300 focus:ring-sky-600"
             />
             <label htmlFor="scheduleApptOnly" className="text-xs font-bold text-slate-700 cursor-pointer">
-              Mark as 'Appointments Only' (Renders soft blue badge like Friday Jummah)
+              Mark as 'Appointments Only' (Highlights the schedule window with appointment-only status)
             </label>
           </div>
 
